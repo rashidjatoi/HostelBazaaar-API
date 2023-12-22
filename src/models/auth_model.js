@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { validationResult, checkSchema } = require('express-validator');
 const authSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -14,10 +14,14 @@ const authSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    phoneNumber: {},
-    password: {},
-})
+    phoneNumber: {
+        type:Number,
+        required:true,
+    },
+    password: {
+        type:String,
+        required:true
+    },
+},)
 
-const authModel = mongoose.model("auth", authSchema);
-
-module.exports = authModel;
+module.exports = mongoose.model("auth", authSchema);

@@ -1,11 +1,15 @@
 const express = require("express");
-const newsletterRouter = require("./src/router/newsletter_route");
-const mongoose = require("./src/config/db");
 const app = express();
+require('dotenv').config();
+
+// Import Models
+const newsletterRouter = require("./src/router/newsletter_route");
+const authRouter = require("./src/router/auth_route");
 
 // Middleware
 app.use(express.json());
 app.use(newsletterRouter);
+app.use(authRouter)
 
 
 const PORT = process.env.PORT;
