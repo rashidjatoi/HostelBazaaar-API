@@ -15,13 +15,17 @@ const authSchema = mongoose.Schema({
         unique: true
     },
     phoneNumber: {
-        type:Number,
-        required:true,
+        type: Number,
+        required: true,
     },
     password: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
-},)
+    date: {
+        type: Date,
+        default: Date.now
+    }
+})
 
 module.exports = mongoose.model("auth", authSchema);
