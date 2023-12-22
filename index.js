@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const mongoose = require("./src/config/db")
 require('dotenv').config();
 
 // Import Models

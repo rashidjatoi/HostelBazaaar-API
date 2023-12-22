@@ -9,7 +9,6 @@ authRouter.post("/api/auth/register", [
     check("email").isEmail().custom((value, { req }) => {
         return new Promise((resolve, reject) => {
             AuthModel.findOne({ 'email': req.body.email }).then((user) => {
-                console.log(user);
                 if (user) {
                     reject(new Error("E-mail already in use"));
                 } else {
