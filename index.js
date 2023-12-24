@@ -7,9 +7,6 @@ require('dotenv').config();
 const newsletterRouter = require("./src/router/newsletter_route");
 const authRouter = require("./src/router/auth_route");
 
-// constants
-let apiConst = "api/v1";
-
 // Middleware
 app.use(express.json());
 app.use("/api/v1/newsletter" , newsletterRouter);
