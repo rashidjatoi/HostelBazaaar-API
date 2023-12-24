@@ -9,7 +9,7 @@ const authRouter = require("./src/router/auth_route");
 
 // Middleware
 app.use(express.json());
-app.use(newsletterRouter);
+app.use( "api/v1/" ,newsletterRouter);
 app.use(authRouter);
 
 
