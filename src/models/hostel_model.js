@@ -17,27 +17,27 @@ const hostelSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    amenities: {
-        type: Array,
-        required: true
-    },
-    reviews: {
-        Cleanliness: {
-            type: Number
-        },
-        Amenities: {
-            type: Number
-        },
-        Location: {
-            type: Number
-        },
-        Comfort: {
-            type: Number
-        },
-        Wifi: {
-            type: Number
-        }
-    },
+    // amenities: {
+    //     type: Array,
+    //     required: true
+    // },
+    // reviews: {
+    //     Cleanliness: {
+    //         type: Number
+    //     },
+    //     Amenities: {
+    //         type: Number
+    //     },
+    //     Location: {
+    //         type: Number
+    //     },
+    //     Comfort: {
+    //         type: Number
+    //     },
+    //     Wifi: {
+    //         type: Number
+    //     }
+    // },
     date: {
         type: Date,
         default: Date.now
