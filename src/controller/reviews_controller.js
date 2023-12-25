@@ -1,4 +1,5 @@
 const ReviewsModel = require("../models/reviews_model");
+const HostelModel = require("../models/hostel_model");
 
 // Reviews Controller
 const reviewsController = {
@@ -53,6 +54,32 @@ const reviewsController = {
       }
 
       await existingReview.save();
+
+      // Calculate average ratings
+      const totalCleanliness =
+        existingReview.reviews.cleanliness / existingReview.noUser;
+      const totalAmenities =
+        existingReview.reviews.amenities / existingReview.noUser;
+      const totalLocation =
+        existingReview.reviews.location / existingReview.noUser;
+      const totalComfort =
+        existingReview.reviews.comfort / existingReview.noUser;
+      const totalWifi = existingReview.reviews.wifi / existingReview.noUser;
+
+      // Calculate total average of all ratings
+      const totalAverage =
+        (totalCleanliness +
+          totalAmenities +
+          totalLocation +
+          totalComfort +
+          totalWifi) /
+        5;
+
+      // Update HostelModel with totalReviews field
+      await HostelModel.updateOne(
+        { _id: hostelId },
+        { totalReviews: totalAverage }
+      );
 
       return res.status(200).json({
         success: true,
