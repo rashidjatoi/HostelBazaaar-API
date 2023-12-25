@@ -41,7 +41,7 @@ const authController = {
                         bcrypt.compare(password, user.password).then((pass) => {
                             if (pass) {
                                 const token = jwt.sign(user.id, process.env.JWT_SECRET);
-                                res.json({ token: token })
+                                res.status(200).json({ token: token })
                             } else {
                                 return res.status(400).json("Please Login with correct Password");
                             }

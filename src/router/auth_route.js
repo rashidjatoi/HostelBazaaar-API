@@ -3,7 +3,7 @@ const AuthController = require("../controller/auth_controller");
 const AuthModel = require("../models/auth_model");
 const { check } = require("express-validator");
 
-authRouter.post("/register", [
+authRouter.post("/auth/register", [
     // Register User Validation
     check('firstName', "Please Enter a First Name")
         .not().isEmpty().trim().escape(),
@@ -29,7 +29,7 @@ authRouter.post("/register", [
 ], AuthController.registerUser);
 
 
-authRouter.post("/login", [
+authRouter.post("/auth/login", [
     check("email", "Enter a valid email").isEmail(),
     check("password", "Password cannot be blank").exists(),
 ], AuthController.loginUser);
