@@ -1,25 +1,29 @@
 const mongoose = require("mongoose");
-const authSchema = mongoose.Schema({
-    firstName: {
+const hostelSchema = mongoose.Schema({
+    thumbnail: {
         type: String,
         required: true,
     },
-    lastName: {
-        type: String,
-        required: true,
-    },
-    email: {
+    title: {
         type: String,
         required: true,
         unique: true
     },
-    phoneNumber: {
-        type: Number,
+    desc: {
+        type: String,
         required: true,
     },
-    password: {
+    price: {
         type: String,
-        required: true
+        required: true,
+    },
+    location: {
+        type: String,
+        required: true,
+    },
+    rating: {
+        type: Number,
+        default: 0,
     },
     date: {
         type: Date,
@@ -27,4 +31,4 @@ const authSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("auth", authSchema);
+module.exports = mongoose.model("hostel", hostelSchema);
