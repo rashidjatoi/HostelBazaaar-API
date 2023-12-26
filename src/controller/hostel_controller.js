@@ -4,7 +4,7 @@ const hostelController = {
     // GET ALL HOSTEL
     getHostels: async (req, res) => {
         try {
-            await HostelModel.find().select("-amenities").select("-reviews")
+            await HostelModel.find()
                 .then((item) => {
                     res.status(200).json({ hostels: item })
                 }).catch((err) => {

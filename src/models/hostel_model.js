@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const hostelSchema = mongoose.Schema({
+    thumbnail: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,
@@ -17,27 +21,10 @@ const hostelSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    // amenities: {
-    //     type: Array,
-    //     required: true
-    // },
-    // reviews: {
-    //     Cleanliness: {
-    //         type: Number
-    //     },
-    //     Amenities: {
-    //         type: Number
-    //     },
-    //     Location: {
-    //         type: Number
-    //     },
-    //     Comfort: {
-    //         type: Number
-    //     },
-    //     Wifi: {
-    //         type: Number
-    //     }
-    // },
+    rating: {
+        type: Number,
+        default: 0,
+    },
     date: {
         type: Date,
         default: Date.now
