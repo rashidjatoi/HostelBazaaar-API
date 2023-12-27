@@ -38,11 +38,11 @@ const hostelController = {
             : null,
           reviews: hostelReviews
             ? {
-                cleanliness: hostelReviews.reviews.cleanliness,
-                amenities: hostelReviews.reviews.cleanliness,
-                location: hostelReviews.reviews.cleanliness,
-                comfort: hostelReviews.reviews.cleanliness,
-                wifi: hostelReviews.reviews.cleanliness,
+                cleanliness: hostelReviews.cleanliness,
+                amenities: hostelReviews.cleanliness,
+                location: hostelReviews.cleanliness,
+                comfort: hostelReviews.cleanliness,
+                wifi: hostelReviews.cleanliness,
               }
             : null,
         };
