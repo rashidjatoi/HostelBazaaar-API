@@ -5,9 +5,9 @@ const reviewsSchema = mongoose.Schema({
     ref: "hostel",
     required: true,
   },
-
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "auth",
     required: true,
   },
 
