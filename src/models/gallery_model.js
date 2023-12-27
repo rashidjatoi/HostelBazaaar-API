@@ -8,6 +8,7 @@ const gallerySchema = mongoose.Schema({
   },
 
   images: Array,
+
   date: {
     type: Date,
     default: Date.now,
