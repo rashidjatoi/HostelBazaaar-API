@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const AmentittiesSchema = new mongoose.Schema({
     hostelId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "hostel"
+        ref: "hostel",
+        required: true
     },
     freeWifi: {
         type: Boolean,
