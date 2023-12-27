@@ -7,7 +7,6 @@ require("dotenv").config();
 const newsletterRouter = require("./src/router/newsletter_route");
 const authRouter = require("./src/router/auth_route");
 const hostelRouter = require("./src/router/hostel_route");
-const reviewsRouter = require("./src/router/reviews_router");
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +17,6 @@ app.use(express.json());
 app.use(baseUrl, newsletterRouter);
 app.use(baseUrl, authRouter);
 app.use(baseUrl, hostelRouter);
-app.use(baseUrl, reviewsRouter);
 
 app.get("/", (req, res) => {
   res.json({
