@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const hostelSchema = mongoose.Schema({
   thumbnail: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "hostel",
     required: true,
   },
   title: {
