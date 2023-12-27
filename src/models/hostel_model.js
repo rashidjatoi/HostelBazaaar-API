@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const hostelSchema = mongoose.Schema({
+  thumbnail: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -10,22 +14,22 @@ const hostelSchema = mongoose.Schema({
     required: true,
   },
   price: {
-    type: String,
+    type: Number,
     required: true,
   },
   location: {
     type: String,
     required: true,
   },
-
-  totalReviews: {
+  rating: {
     type: Number,
-    required: true,
+    default: 0,
   },
+
   date: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model("hostel", hostelSchema);
+module.exports = mongoose.model("hostels", hostelSchema);

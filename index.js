@@ -6,13 +6,19 @@ require("dotenv").config();
 // Import Models
 const newsletterRouter = require("./src/router/newsletter_route");
 const authRouter = require("./src/router/auth_route");
-const reviewRouter = require("./src/router/reviews_router");
+const hostelRouter = require("./src/router/hostel_route");
+const reviewsRouter = require("./src/router/reviews_router");
+
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware
+const baseUrl = "/api/v1";
 app.use(express.json());
-app.use("/api/v1/newsletter", newsletterRouter);
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1", reviewRouter);
+app.use(baseUrl, newsletterRouter);
+app.use(baseUrl, authRouter);
+app.use(baseUrl, hostelRouter);
+app.use(baseUrl, reviewsRouter);
 
 app.get("/", (req, res) => {
   res.json({

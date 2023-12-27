@@ -1,90 +1,28 @@
 const ReviewsModel = require("../models/reviews_model");
 const HostelModel = require("../models/hostel_model");
+const UserReviewModel = require("../models/user_reviews_model");
+const { validationResult } = require("express-validator");
 
 // Reviews Controller
 const reviewsController = {
-  saveReviews: async function (req, res) {
+  getUserReview: async function (req, res) {
     try {
-      const {
-        hostelId,
-        noUser,
-        cleanliness,
-        amenities,
-        location,
-        comfort,
-        wifi,
-      } = req.body;
+      let reviews;
 
-      if (
-        !hostelId ||
-        !noUser ||
-        !cleanliness ||
-        !amenities ||
-        !location ||
-        !comfort ||
-        !wifi
-      ) {
-        return res.status(400).json({
-          success: false,
-          message: "All required fields must be provided",
-        });
-      }
+      const { hostelId, userId } = req.query;
 
-      let existingReview = await ReviewsModel.findOne({ hostelId });
-
-      if (existingReview) {
-        existingReview.noUser += 1;
-        existingReview.reviews.cleanliness += cleanliness;
-        existingReview.reviews.amenities += amenities;
-        existingReview.reviews.location += location;
-        existingReview.reviews.comfort += comfort;
-        existingReview.reviews.wifi += wifi;
+      if (hostelId) {
+        reviews = await UserReviewModel.find({ hostelId });
+      } else if (userId) {
+        reviews = await UserReviewModel.find({ userId });
       } else {
-        existingReview = new ReviewsModel({
-          hostelId,
-          noUser: noUser + 1,
-          reviews: {
-            cleanliness,
-            amenities,
-            location,
-            comfort,
-            wifi,
-          },
-        });
+        reviews = await UserReviewModel.find();
       }
-
-      await existingReview.save();
-
-      // Calculate average ratings
-      const totalCleanliness =
-        existingReview.reviews.cleanliness / existingReview.noUser;
-      const totalAmenities =
-        existingReview.reviews.amenities / existingReview.noUser;
-      const totalLocation =
-        existingReview.reviews.location / existingReview.noUser;
-      const totalComfort =
-        existingReview.reviews.comfort / existingReview.noUser;
-      const totalWifi = existingReview.reviews.wifi / existingReview.noUser;
-
-      // Calculate total average of all ratings
-      const totalAverage =
-        (totalCleanliness +
-          totalAmenities +
-          totalLocation +
-          totalComfort +
-          totalWifi) /
-        5;
-
-      // Update HostelModel with totalReviews field
-      await HostelModel.updateOne(
-        { _id: hostelId },
-        { totalReviews: totalAverage }
-      );
 
       return res.status(200).json({
         success: true,
-        message: "Review saved successfully",
-        data: existingReview,
+        message: "Reviews fetched successfully",
+        data: reviews,
       });
     } catch (error) {
       return res.status(500).json({ success: false, message: error.message });

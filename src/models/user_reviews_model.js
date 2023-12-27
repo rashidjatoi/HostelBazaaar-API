@@ -1,21 +1,14 @@
 const mongoose = require("mongoose");
-const reviewsSchema = mongoose.Schema({
+
+const reviewSchema = new mongoose.Schema({
   hostelId: {
     type: String,
     required: true,
   },
-
   userId: {
     type: String,
     required: true,
   },
-
-  noUser: {
-    type: Number,
-    required: true,
-    default: 1,
-  },
-
   reviews: {
     cleanliness: {
       type: Number,
@@ -38,11 +31,8 @@ const reviewsSchema = mongoose.Schema({
       required: true,
     },
   },
-
-  date: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
-module.exports = mongoose.model("reviews", reviewsSchema);
+const HostelReview = mongoose.model("HostelReview", reviewSchema);
+
+module.exports = HostelReview;

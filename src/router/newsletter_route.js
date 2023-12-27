@@ -1,7 +1,7 @@
 const newsletterRouter = require("express").Router();
 const newsletterController = require("../controller/news_letter_controller");
 
-newsletterRouter.post("/", newsletterController.saveEmail);
-newsletterRouter.get("/", newsletterController.fetchEmail);
+newsletterRouter.post("/newsletter", newsletterController.saveEmail);
+newsletterRouter.get("/newsletter", newsletterController.fetchEmail);
 
 module.exports = newsletterRouter;
