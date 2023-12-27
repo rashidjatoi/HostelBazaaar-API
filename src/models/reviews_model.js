@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const reviewsSchema = mongoose.Schema({
   hostelId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "hostel",
     required: true,
   },
 
