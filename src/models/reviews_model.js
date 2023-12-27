@@ -16,30 +16,26 @@ const reviewsSchema = mongoose.Schema({
     required: true,
     default: 1,
   },
-
-  reviews: {
-    cleanliness: {
-      type: Number,
-      required: true,
-    },
-    amenities: {
-      type: Number,
-      required: true,
-    },
-    location: {
-      type: Number,
-      required: true,
-    },
-    comfort: {
-      type: Number,
-      required: true,
-    },
-    wifi: {
-      type: Number,
-      required: true,
-    },
+  cleanliness: {
+    type: Number,
+    required: true,
   },
-
+  amenities: {
+    type: Number,
+    required: true,
+  },
+  location: {
+    type: Number,
+    required: true,
+  },
+  comfort: {
+    type: Number,
+    required: true,
+  },
+  wifi: {
+    type: Number,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,
