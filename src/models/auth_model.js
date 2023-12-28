@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { validationResult, checkSchema } = require('express-validator');
 const authSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -21,6 +20,10 @@ const authSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    admin: {
+        type: Boolean,
+        default: false
     },
     date: {
         type: Date,
