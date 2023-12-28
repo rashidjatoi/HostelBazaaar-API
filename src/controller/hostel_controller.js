@@ -51,11 +51,7 @@ const hostelController = {
               }
             : null,
 
-          gallery: gallery
-            ? {
-                images: gallery.images,
-              }
-            : null,
+          images: gallery ? gallery.images : null,
         };
         hostelsWithAmenities.push(hostelWithAmenities);
       }
