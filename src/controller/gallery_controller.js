@@ -10,26 +10,25 @@ const galleryController = {
         return res
           .status(400)
           .json({ errors: errors.array().map((err) => err.msg) });
-      }
-
-      const { hostelId, images } = req.body;
-
-      let gallery = await GalleryModel.findOne({ hostelId });
-
-      if (!gallery) {
-        gallery = new GalleryModel({
-          hostelId: hostelId,
-          images: images,
-        });
       } else {
-        if (images && images.length > 0) {
-          gallery.images.push(...images);
-        }
+        const { hostelId, images } = req.body;
+
+        await GalleryModel.findOne({ hostelId })
+          .then(async (item) => {
+            if (item) {
+              item.images.push(...images)
+              await item.save();
+            } else {
+              GalleryModel.create({
+                hostelId: hostelId,
+                images: images,
+              })
+            }
+            return res.status(200).json({ message: "Gallery Updated" });
+          }).catch(() => {
+            res.status(400).json({ error: "Data not valid" })
+          })
       }
-
-      await gallery.save();
-
-      return res.status(200).json({ message: "Gallery Updated" });
     } catch (error) {
       return res.status(500).json({ error: "Internal Server Error" });
     }
