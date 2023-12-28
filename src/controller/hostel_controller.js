@@ -17,7 +17,7 @@ const hostelController = {
           hostelId: element._id,
         });
 
-        const galleryModel = await GalleryModel.findOne({
+        const gallery = await GalleryModel.findOne({
           hostelId: element._id,
         });
 
@@ -51,9 +51,9 @@ const hostelController = {
               }
             : null,
 
-          gallery: galleryModel
+          gallery: gallery
             ? {
-                images: galleryModel.images,
+                images: gallery.images,
               }
             : null,
         };
