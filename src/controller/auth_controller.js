@@ -24,11 +24,13 @@ const authController = {
           phoneNumber: phoneNumber,
           password: securePassword,
         }).then((user) => {
-          return res.status(200).json(user);
+          if (user) {
+            return res.status(200).send("User Registered Successfully");
+          }
         });
       }
     } catch (error) {
-      return res.status(500).json(error.message);
+      return res.status(500).json("Internal Server Error");
     }
   },
   // Login User
@@ -49,19 +51,19 @@ const authController = {
                 res.json({ token: token });
               } else {
                 return res
-                  .status(400)
-                  .json("Please Login with correct Password");
+                  .status(404)
+                  .send("Please Login with correct Password");
               }
             });
           })
           .catch((err) => {
             return res
-              .status(400)
+              .status(404)
               .json({ error: "Please Login with correct Email" });
           });
       }
     } catch (error) {
-      return res.status(400).json(error.message);
+      return res.status(500).send("Internal Server Error");
     }
   },
 };
