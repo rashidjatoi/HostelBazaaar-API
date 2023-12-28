@@ -1,6 +1,7 @@
 const HostelModel = require("../models/hostel_model");
 const AmentityModel = require("../models/amentities_model");
 const ReviewsModel = require("../models/reviews_model");
+const GalleryModel = require("../models/gallery_model");
 const hostelController = {
   // GET ALL HOSTEL
   getHostels: async (req, res) => {
@@ -13,6 +14,10 @@ const hostelController = {
           hostelId: element._id,
         });
         const hostelReviews = await ReviewsModel.findOne({
+          hostelId: element._id,
+        });
+
+        const galleryModel = await GalleryModel.findOne({
           hostelId: element._id,
         });
 
@@ -38,11 +43,17 @@ const hostelController = {
             : null,
           reviews: hostelReviews
             ? {
-                cleanliness: hostelReviews.reviews.cleanliness,
-                amenities: hostelReviews.reviews.cleanliness,
-                location: hostelReviews.reviews.cleanliness,
-                comfort: hostelReviews.reviews.cleanliness,
-                wifi: hostelReviews.reviews.cleanliness,
+                cleanliness: hostelReviews.cleanliness,
+                amenities: hostelReviews.cleanliness,
+                location: hostelReviews.cleanliness,
+                comfort: hostelReviews.cleanliness,
+                wifi: hostelReviews.cleanliness,
+              }
+            : null,
+
+          gallery: galleryModel
+            ? {
+                images: galleryModel.images,
               }
             : null,
         };
