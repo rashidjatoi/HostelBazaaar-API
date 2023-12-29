@@ -23,7 +23,7 @@ const authSchema = mongoose.Schema({
     },
     admin: {
         type: Boolean,
-        default: false
+        required: true
     },
     date: {
         type: Date,

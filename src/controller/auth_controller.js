@@ -14,7 +14,7 @@ const authController = {
           .status(400)
           .json({ errors: errors.array().map((err) => err.msg) });
       } else {
-        const { firstName, lastName, email, phoneNumber, password } = req.body;
+        const { firstName, lastName, email, phoneNumber, password, admin } = req.body;
         const salt = await bcrypt.genSalt(10);
         const securePassword = bcrypt.hashSync(password, salt);
         await AuthModel.create({
@@ -23,8 +23,9 @@ const authController = {
           email: email,
           phoneNumber: phoneNumber,
           password: securePassword,
+          admin: admin
         }).then((user) => {
-          return res.status(200).json(user);
+          return res.status(200).json({ message: "Account Created Successfully", user });
         });
       }
     } catch (error) {
@@ -45,8 +46,14 @@ const authController = {
           .then((user) => {
             bcrypt.compare(password, user.password).then((pass) => {
               if (pass) {
-                const token = jwt.sign(user.id, process.env.JWT_SECRET);
-                res.json({ token: token });
+                const payload = {
+                  user: {
+                    id: user.id,
+                    admin: user.admin
+                  }
+                }
+                const token = jwt.sign(payload, process.env.JWT_SECRET);
+                res.json({ token: token, user });
               } else {
                 return res
                   .status(400)
