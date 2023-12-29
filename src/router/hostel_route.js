@@ -10,6 +10,7 @@ hostelRouter.get("/hostel/getHostels", HostelController.getHostels);
 // POST ALL HOSTELS
 hostelRouter.post(
   "/hostel/createhostel",
+  getAdmin,
   [
     check("thumbnail", "Please Enter thumbnail").not().isEmpty().trim().escape(),
     check("title", "Please Enter a Title").not().isEmpty().trim().escape()
@@ -33,7 +34,6 @@ hostelRouter.post(
     check("rating", "Please Enter Price").not(),
     check("price", "Please Enter Price").not().isEmpty().isNumeric().toInt().trim().escape(),
   ],
-  getAdmin,
   HostelController.addHostel
 );
 
