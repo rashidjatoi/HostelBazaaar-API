@@ -18,11 +18,7 @@ const amentitiesController = {
       if (!amentity) {
         amentity = new AmentityModel({ hostelId, ...amenities });
       } else {
-        for (const key in amenities) {
-          if (amenities[key] !== undefined) {
-            amentity[key] = amenities[key];
-          }
-        }
+        Object.assign(amentity, amenities);
       }
 
       await amentity.save();
