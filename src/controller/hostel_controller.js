@@ -14,7 +14,8 @@ const hostelController = {
           .status(400)
           .json({ errors: errors.array().map((err) => err.msg) });
       } else {
-        const { userId, thumbnail, title, desc, price, location, rating } = req.body;
+        const { userId, thumbnail, title, desc, price, location, rating } =
+          req.body;
         await HostelModel.create({
           userId: userId,
           thumbnail: thumbnail,
@@ -61,23 +62,23 @@ const hostelController = {
           date: element.date,
           amentities: amenities
             ? {
-              freeWifi: amenities.freeWifi,
-              privateBathroom: amenities.privateBathroom,
-              freeParking: amenities.freeParking,
-              helpDesk: amenities.helpDesk,
-              airCondition: amenities.airCondition,
-              keyAccess: amenities.keyAccess,
-              transportation: amenities.transportation,
-            }
+                freeWifi: amenities.freeWifi,
+                privateBathroom: amenities.privateBathroom,
+                freeParking: amenities.freeParking,
+                helpDesk: amenities.helpDesk,
+                airCondition: amenities.airCondition,
+                keyAccess: amenities.keyAccess,
+                transportation: amenities.transportation,
+              }
             : null,
           reviews: hostelReviews
             ? {
-              cleanliness: hostelReviews.cleanliness,
-              amenities: hostelReviews.cleanliness,
-              location: hostelReviews.cleanliness,
-              comfort: hostelReviews.cleanliness,
-              wifi: hostelReviews.cleanliness,
-            }
+                cleanliness: hostelReviews.cleanliness,
+                amenities: hostelReviews.cleanliness,
+                location: hostelReviews.cleanliness,
+                comfort: hostelReviews.cleanliness,
+                wifi: hostelReviews.cleanliness,
+              }
             : null,
 
           images: gallery ? gallery.images : null,
