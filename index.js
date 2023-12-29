@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(baseUrl, newsletterRouter);
 app.use(baseUrl, authRouter);
 app.use(baseUrl, hostelRouter);
+app.use(baseUrl, AmenitiesRouter);
 app.use(baseUrl, galleryRouter);
 
 app.get("/", (req, res) => {
