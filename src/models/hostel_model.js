@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const hostelSchema = mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "auth",
+    required: true,
+  },
+
   thumbnail: {
     type: String,
     required: true,
