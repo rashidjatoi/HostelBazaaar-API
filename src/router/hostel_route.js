@@ -5,30 +5,56 @@ const { check } = require("express-validator");
 
 // GET ALL HOSTELS
 hostelRouter.get("/hostel/getHostels", HostelController.getHostels);
+
 // POST ALL HOSTELS
 hostelRouter.post(
   "/hostel/addHostels",
   [
-    check("thumbnail", "Please Enter thumbnail").not().isEmpty().trim().escape(),
-    check("title", "Please Enter a Title").not().isEmpty().trim().escape()
+    check("thumbnail", "Please Enter thumbnail")
+      .not()
+      .isEmpty()
+      .trim()
+      .escape(),
+    check("title", "Please Enter a Title")
+      .not()
+      .isEmpty()
+      .trim()
+      .escape()
       .custom((value, { req }) => {
         return new Promise((resolve, reject) => {
-          HostelModel.findOne({ 'title': req.body.title }).then((title) => {
-            if (title) {
-              reject(new Error("Hostel name already Exist"));
-            } else {
-              resolve(true);
-            }
-          }).catch((err) => {
-            reject(new Error(err));
-          });
+          HostelModel.findOne({ title: req.body.title })
+            .then((title) => {
+              if (title) {
+                reject(new Error("Hostel name already Exist"));
+              } else {
+                resolve(true);
+              }
+            })
+            .catch((err) => {
+              reject(new Error(err));
+            });
         });
-      }),
-    ,
+      }), // Remove the extra comma here
     check("desc", "Please Enter a Description").not().isEmpty().trim().escape(),
-    check("location", "Please Enter a Location").not().isEmpty().trim().escape(),
-    check("rating", "Please Enter Price").not().isEmpty().isNumeric().toInt().trim().escape(),
-    check("price", "Please Enter Price").not().isEmpty().isNumeric().toInt().trim().escape(),
+    check("location", "Please Enter a Location")
+      .not()
+      .isEmpty()
+      .trim()
+      .escape(),
+    check("rating", "Please Enter Price")
+      .not()
+      .isEmpty()
+      .isNumeric()
+      .toInt()
+      .trim()
+      .escape(),
+    check("price", "Please Enter Price")
+      .not()
+      .isEmpty()
+      .isNumeric()
+      .toInt()
+      .trim()
+      .escape(),
   ],
   HostelController.addHostel
 );
