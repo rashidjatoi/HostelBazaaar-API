@@ -1,5 +1,6 @@
 const hostelRouter = require("express").Router();
 const HostelController = require("../controller/hostel_controller");
+const getAdmin = require("../middleware/getAdmin");
 const HostelModel = require("../models/hostel_model");
 const { check } = require("express-validator");
 
@@ -29,9 +30,10 @@ hostelRouter.post(
       }),
     check("desc", "Please Enter a Description").not().isEmpty().trim().escape(),
     check("location", "Please Enter a Location").not().isEmpty().trim().escape(),
-    check("rating", "Please Enter Price").not().isEmpty().isNumeric().toInt().trim().escape(),
+    check("rating", "Please Enter Price").not(),
     check("price", "Please Enter Price").not().isEmpty().isNumeric().toInt().trim().escape(),
   ],
+  getAdmin,
   HostelController.addHostel
 );
 
