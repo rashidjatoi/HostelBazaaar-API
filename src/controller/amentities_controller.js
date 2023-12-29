@@ -16,12 +16,12 @@ const amentitiesController = {
       let amentity = await AmentityModel.findOne({ hostelId });
 
       if (!amentity) {
-        amentity = new AmentityModel({ hostelId, ...amenities });
+        await AmentityModel.create({ hostelId, ...amenities });
       } else {
         Object.assign(amentity, amenities);
+        await amentity.save();
       }
 
-      await amentity.save();
       return res.status(200).json({ message: "Amenities Updated" });
     } catch (error) {
       return res.status(500).json({ error: "Internal Server Error" });
