@@ -9,13 +9,15 @@ const authRouter = require("./src/router/auth_route");
 const hostelRouter = require("./src/router/hostel_route");
 const AmenitiesRouter = require("./src/router/amentities_route");
 
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: true }));
+
 // Middleware
 const baseUrl = "/api/v1";
 app.use(express.json());
 app.use(baseUrl, newsletterRouter);
 app.use(baseUrl, authRouter);
 app.use(baseUrl, hostelRouter);
-app.use(baseUrl, AmenitiesRouter);
 
 app.get("/", (req, res) => {
   res.json({
