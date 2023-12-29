@@ -13,16 +13,18 @@ const amentitiesController = {
 
       const { hostelId, ...amenities } = req.body;
 
-      let amentity = await AmentityModel.findOne({ hostelId });
-
-      if (!amentity) {
-        await AmentityModel.create({ hostelId, ...amenities });
-      } else {
-        Object.assign(amentity, amenities);
-        await amentity.save();
-      }
-
-      return res.status(200).json({ message: "Amenities Updated" });
+      await AmentityModel.findOne({ hostelId })
+        .then(async (amentity) => {
+          if (!amentity) {
+            await AmentityModel.create({ hostelId, ...amenities });
+          } else {
+            Object.assign(amentity, amenities);
+            await amentity.save();
+          }
+          return res.status(200).json({ message: "Amenities Updated" });
+        }).catch((err) => {
+          return res.status(200).json({ error: "Data not valid" });
+        })
     } catch (error) {
       return res.status(500).json({ error: "Internal Server Error" });
     }
