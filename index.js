@@ -8,6 +8,7 @@ const newsletterRouter = require("./src/router/newsletter_route");
 const authRouter = require("./src/router/auth_route");
 const hostelRouter = require("./src/router/hostel_route");
 const galleryRouter = require("./src/router/gallery_route");
+const AmenitiesRouter = require("./src/router/amentities_route");
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
