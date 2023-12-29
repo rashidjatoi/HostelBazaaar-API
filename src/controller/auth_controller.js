@@ -45,7 +45,12 @@ const authController = {
           .then((user) => {
             bcrypt.compare(password, user.password).then((pass) => {
               if (pass) {
-                const token = jwt.sign(user.id, process.env.JWT_SECRET);
+                const payload = {
+                  user: {
+                    id: user.id
+                  }
+                }
+                const token = jwt.sign(payload, process.env.JWT_SECRET);
                 res.json({ token: token });
               } else {
                 return res
