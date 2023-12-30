@@ -13,8 +13,7 @@ const newsletterController = {
           .json({ errors: errors.array().map((err) => err.msg) });
       }
       const { email } = req.body;
-      const newEmail = new NewsletterModel({ email });
-      await newEmail.save();
+      await NewsletterModel.create({ email });
       return res.json({ success: true, message: "User Subscribed" });
     } catch (error) {
       return res.status(500).json({ success: false, message: error.message });

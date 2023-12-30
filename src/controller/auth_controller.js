@@ -14,7 +14,8 @@ const authController = {
           .status(400)
           .json({ errors: errors.array().map((err) => err.msg) });
       } else {
-        const { firstName, lastName, email, phoneNumber, password, admin } = req.body;
+        const { firstName, lastName, email, phoneNumber, password, admin } =
+          req.body;
         const salt = await bcrypt.genSalt(10);
         const securePassword = bcrypt.hashSync(password, salt);
         await AuthModel.create({
@@ -23,9 +24,11 @@ const authController = {
           email: email,
           phoneNumber: phoneNumber,
           password: securePassword,
-          admin: admin
+          admin: admin,
         }).then((user) => {
-          return res.status(200).json({ message: "Account Created Successfully", user });
+          return res
+            .status(200)
+            .json({ message: "Account Created Successfully" });
         });
       }
     } catch (error) {
@@ -42,30 +45,19 @@ const authController = {
           .json({ errors: errors.array().map((err) => err.msg) });
       } else {
         const { email, password } = req.body;
-        await AuthModel.findOne({ email })
-          .then((user) => {
-            bcrypt.compare(password, user.password).then((pass) => {
-              if (pass) {
-                const payload = {
-                  user: {
-                    id: user.id,
-                    admin: user.admin
-                  }
-                }
-                const token = jwt.sign(payload, process.env.JWT_SECRET);
-                res.json({ token: token, user });
-              } else {
-                return res
-                  .status(400)
-                  .json("Please Login with correct Password");
-              }
-            });
-          })
-          .catch((err) => {
-            return res
-              .status(400)
-              .json({ error: "Please Login with correct Email" });
-          });
+        const user = await AuthModel.findOne({ email });
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (isPasswordValid) {
+          const { password, ...userWithoutPassword } = user.toObject();
+          const payload = {
+            user: {
+              id: user.id,
+              admin: user.admin,
+            },
+          };
+          const token = jwt.sign(payload, process.env.JWT_SECRET);
+          res.json({ token: token, user: userWithoutPassword });
+        }
       }
     } catch (error) {
       return res.status(400).json(error.message);
