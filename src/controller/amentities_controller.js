@@ -22,9 +22,10 @@ const amentitiesController = {
             await amentity.save();
           }
           return res.status(200).json({ message: "Amenities Updated" });
-        }).catch((err) => {
-          return res.status(200).json({ error: "Data not valid" });
         })
+        .catch((err) => {
+          return res.status(200).json({ error: "Data not valid" });
+        });
     } catch (error) {
       return res.status(500).json({ error: "Internal Server Error" });
     }
