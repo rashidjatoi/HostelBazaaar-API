@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_ACCESS = process.env.JWT_ACCESS;
 
 const getAdmin = (req, res, next) => {
   try {
-    jwt.verify(req.header("access_token"), JWT_SECRET, (err, data) => {
+    jwt.verify(req.header("access_token"), JWT_ACCESS, (err, data) => {
       if (err) {
         res.status(401).json({ error: "Access Denied" });
       } else {

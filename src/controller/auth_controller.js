@@ -3,6 +3,7 @@ const { validationResult } = require("express-validator");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const ms = require("ms")
 
 const authController = {
   // Register User
@@ -46,6 +47,12 @@ const authController = {
       } else {
         const { email, password } = req.body;
         const user = await AuthModel.findOne({ email });
+
+        // Check if user exists
+        if (!user) {
+          return res.status(401).json({ errors: ['Invalid credentials'] });
+        }
+
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (isPasswordValid) {
           const { password, ...userWithoutPassword } = user.toObject();
@@ -55,14 +62,30 @@ const authController = {
               admin: user.admin,
             },
           };
-          const token = jwt.sign(payload, process.env.JWT_SECRET);
-          res.json({ token: token, user: userWithoutPassword });
+          const token = jwt.sign(payload, process.env.JWT_ACCESS, { expiresIn: process.env.JWT_ACCESS_EXPIRE });
+          const refresh = jwt.sign(payload, process.env.JWT_REFRESH, { expiresIn: process.env.JWT_REFRESH_EXPIRE });
+
+          const response = {
+            access: {
+              token: token,
+              expires: new Date(Date.now() + ms(process.env.JWT_ACCESS_EXPIRE)).toLocaleString()
+            },
+            refresh: {
+              token: refresh,
+              expires: new Date(Date.now() + ms(process.env.JWT_REFRESH_EXPIRE)).toLocaleString()
+            },
+            user: userWithoutPassword
+          }
+          res.json(response);
+        } else {
+          return res.status(401).json({ errors: ['Invalid credentials'] });
         }
       }
     } catch (error) {
-      return res.status(400).json(error.message);
+      return res.status(400).json({ error: error.message });
     }
   },
+
 };
 
 module.exports = authController;
