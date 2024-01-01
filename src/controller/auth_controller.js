@@ -1,9 +1,11 @@
 const AuthModel = require("../models/auth_model");
 const { validationResult } = require("express-validator");
+const { signAccessToken } = require("../helpers/jwt_helper")
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const ms = require("ms")
+const ms = require("ms");
+const createHttpError = require("http-errors");
 
 const authController = {
   // Register User
@@ -26,10 +28,11 @@ const authController = {
           phoneNumber: phoneNumber,
           password: securePassword,
           admin: admin,
-        }).then((user) => {
-          return res
-            .status(200)
-            .json({ message: "Account Created Successfully" });
+        }).then(async (user) => {
+          if (user) {
+            const accesssToken = await signAccessToken(user)
+            res.status(200).send({ message: "Account Created Successfully", accesssToken })
+          }
         });
       }
     } catch (error) {
