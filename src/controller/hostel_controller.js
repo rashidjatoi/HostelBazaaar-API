@@ -2,6 +2,7 @@ const HostelModel = require("../models/hostel_model");
 const AmentityModel = require("../models/amentities_model");
 const ReviewsModel = require("../models/reviews_model");
 const GalleryModel = require("../models/gallery_model");
+const RoomModel = require("../models/room_model");
 const { validationResult } = require("express-validator");
 
 const hostelController = {
@@ -50,6 +51,22 @@ const hostelController = {
           hostelId: element._id,
         });
 
+        const rooms = await RoomModel.find({
+          hostelId: element._id,
+        });
+
+
+        const roomsArray = rooms.map(room => ({
+          type: room.type,
+          price: room.price,
+          beds: room.beds,
+          description: room.description,
+          amenities: room.amenities,
+          availability: room.availability,
+          images: room.images,
+          occupancy: room.occupancy
+        }));
+
         const hostelWithAmenities = {
           _id: element._id,
           thumbnail: element.thumbnail,
@@ -73,13 +90,13 @@ const hostelController = {
           reviews: hostelReviews
             ? {
               cleanliness: hostelReviews.cleanliness,
-              amenities: hostelReviews.cleanliness,
-              location: hostelReviews.cleanliness,
-              comfort: hostelReviews.cleanliness,
-              wifi: hostelReviews.cleanliness,
+              amenities: hostelReviews.amenities,
+              location: hostelReviews.location,
+              comfort: hostelReviews.comfort,
+              wifi: hostelReviews.wifi,
             }
             : null,
-
+          rooms: roomsArray.length > 0 ? roomsArray : null,
           images: gallery ? gallery.images : null,
         };
         hostelsWithAmenities.push(hostelWithAmenities);
