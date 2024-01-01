@@ -13,7 +13,7 @@ const authController = {
       if (!errors.isEmpty()) {
         return res
           .status(400)
-          .json({ errors: errors.array().map((err) => err.msg) });
+          .send({ error: "All fields are required" });
       } else {
         const { firstName, lastName, email, phoneNumber, password, admin } =
           req.body;
@@ -29,11 +29,11 @@ const authController = {
         }).then((user) => {
           return res
             .status(200)
-            .json({ message: "Account Created Successfully" });
+            .send({ message: "Account Created Successfully" });
         });
       }
     } catch (error) {
-      return res.status(500).json(error.message);
+      return res.status(500).send(error.message);
     }
   },
   // Login User
@@ -43,14 +43,14 @@ const authController = {
       if (!errors.isEmpty()) {
         return res
           .status(400)
-          .json({ errors: errors.array().map((err) => err.msg) });
+          .send({ error: "All fields are required" });
       } else {
         const { email, password } = req.body;
         const user = await AuthModel.findOne({ email });
 
         // Check if user exists
         if (!user) {
-          return res.status(401).json({ errors: ['Invalid credentials'] });
+          return res.status(401).send({ errors: 'Invalid credentials' });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -78,11 +78,11 @@ const authController = {
           }
           res.json(response);
         } else {
-          return res.status(401).json({ errors: ['Invalid credentials'] });
+          return res.status(401).send({ errors: 'Invalid credentials' });
         }
       }
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).send({ error: error.message });
     }
   },
 
