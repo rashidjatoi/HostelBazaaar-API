@@ -8,8 +8,9 @@ const amentitiesController = {
       if (!errors.isEmpty()) {
         return res
           .status(400)
-          .json({ errors: errors.array().map((err) => err.msg) });
+          .send({ error: "All fields are required" });
       }
+
 
       const { hostelId, ...amenities } = req.body;
 
@@ -21,13 +22,13 @@ const amentitiesController = {
             Object.assign(amentity, amenities);
             await amentity.save();
           }
-          return res.status(200).json({ message: "Amenities Updated" });
+          return res.status(200).send({ message: "Amenities Updated" });
         })
         .catch((err) => {
-          return res.status(200).json({ error: "Data not valid" });
+          return res.status(200).send({ error: "Data not valid" });
         });
     } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).send({ error: "Internal Server Error" });
     }
   },
 };

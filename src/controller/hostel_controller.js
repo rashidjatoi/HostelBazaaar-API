@@ -12,10 +12,9 @@ const hostelController = {
       if (!errors.isEmpty()) {
         return res
           .status(400)
-          .json({ errors: errors.array().map((err) => err.msg) });
+          .send({ error: "All fields are required" });
       } else {
-        const { thumbnail, title, desc, price, location, rating } =
-          req.body;
+        const { thumbnail, title, desc, price, location, rating } = req.body;
         await HostelModel.create({
           userId: req.user.id,
           thumbnail: thumbnail,
@@ -25,11 +24,11 @@ const hostelController = {
           location: location,
           rating: rating,
         }).then((user) => {
-          return res.status(200).json(user);
+          return res.status(200).send(user);
         });
       }
     } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).send({ error: "Internal Server Error" });
     }
   },
 
@@ -85,9 +84,9 @@ const hostelController = {
         };
         hostelsWithAmenities.push(hostelWithAmenities);
       }
-      res.json({ hostels: hostelsWithAmenities });
+      res.send({ hostels: hostelsWithAmenities });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return res.status(500).send({ error: error.message });
     }
   },
 };

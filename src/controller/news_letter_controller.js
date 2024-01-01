@@ -10,13 +10,13 @@ const newsletterController = {
       if (!errors.isEmpty()) {
         return res
           .status(400)
-          .json({ errors: errors.array().map((err) => err.msg) });
+          .send({ error: "All fields are required" });
       }
       const { email } = req.body;
       await NewsletterModel.create({ email });
       return res.json({ success: true, message: "User Subscribed" });
     } catch (error) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).send({ success: false, message: error.message });
     }
   },
 
@@ -43,7 +43,7 @@ const newsletterController = {
         },
       });
     } catch (error) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).send({ error: error.message });
     }
   },
 };
