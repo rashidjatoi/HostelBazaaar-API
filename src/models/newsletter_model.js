@@ -1,16 +1,6 @@
 const mongoose = require("mongoose");
 
 const newletterSchema = mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-  },
-
-  number: {
-    type: Number,
-    trim: true,
-  },
-
   email: {
     required: true,
     unique: true,

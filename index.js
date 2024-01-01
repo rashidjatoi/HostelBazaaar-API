@@ -1,14 +1,31 @@
 const express = require("express");
-const newsletterRouter = require("./src/router/newsletter_route");
-const mongoose = require("./src/config/db");
 const app = express();
+const mongoose = require("./src/config/db");
+require("dotenv").config();
+const cors = require('cors')
+
+
+// Import Models
+const newsletterRouter = require("./src/router/newsletter_route");
+const authRouter = require("./src/router/auth_route");
+const hostelRouter = require("./src/router/hostel_route");
+const galleryRouter = require("./src/router/gallery_route");
+const AmenitiesRouter = require("./src/router/amentities_route");
+
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors())
+
 
 // Middleware
-app.use(express.json());
-app.use(newsletterRouter);
+const baseUrl = "/api/v1";
 
-
-const PORT = process.env.PORT || 3000;
+app.use(baseUrl, newsletterRouter);
+app.use(baseUrl, authRouter);
+app.use(baseUrl, hostelRouter);
+app.use(baseUrl, AmenitiesRouter);
+app.use(baseUrl, galleryRouter);
 
 app.get("/", (req, res) => {
   res.json({
@@ -17,6 +34,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log("Connected at PORT: " + PORT);
+app.listen(process.env.PORT, () => {
+  console.log("Connected at PORT: " + process.env.PORT);
 });
