@@ -13,7 +13,7 @@ const authController = {
       if (!errors.isEmpty()) {
         return res
           .status(400)
-          .send({ error: "All fields are required" });
+          .send({ error: errors.array().map((err) => err.msg)[0] });
       } else {
         const { firstName, lastName, email, phoneNumber, password, admin } =
           req.body;
@@ -33,9 +33,11 @@ const authController = {
         });
       }
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).send({ error: error.message });
     }
   },
+
+
   // Login User
   loginUser: async (req, res) => {
     try {
